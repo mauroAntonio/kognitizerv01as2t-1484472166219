@@ -270,11 +270,16 @@ export default React.createClass({
         //'js_code' : codestring
       'js_code' : 'ciao'
   });
+   
+    var _post_data = querystring.stringify({'pio':'ciao','num':'1'});    
     
-    //_post_data = msg;
-    var _post_data = querystring.stringify({'pio':'ciao','num':'1'});
-    
-    //_post_data = querystring.stringify(msg);
+    if (msg.results) {      
+      // Convert to closure approach
+      //baseString = display.showResult(msg, baseString, model);
+      _post_data = JSON.stringify(msg, null, 2);
+    }else{
+      _post_data = querystring.stringify({'pio':'ciao','num':'1'});    
+    }
 
   // An object of options to indicate where to post to
   var _post_options = {
