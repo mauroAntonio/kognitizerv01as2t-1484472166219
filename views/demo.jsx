@@ -271,7 +271,8 @@ export default React.createClass({
       'js_code' : 'ciao'
   });
     
-    _post_data = msg;
+    //_post_data = msg;
+    _post_data = {pio:"ciao",num:1};
 
   // An object of options to indicate where to post to
   var _post_options = {
