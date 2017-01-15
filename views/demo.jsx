@@ -210,10 +210,12 @@ export default React.createClass({
   },
 
   handleRawdMessage(msg) {
+    // todo
     this.setState({rawMessages: this.state.rawMessages.concat(msg)});
   },
 
   handleFormattedMessage(msg) {
+    // todo
     this.setState({formattedMessages: this.state.formattedMessages.concat(msg)});
   },
 
