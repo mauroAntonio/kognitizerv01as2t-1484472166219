@@ -286,7 +286,7 @@ export default React.createClass({
       var _post_req = http.request(_post_options, function(res) {
           res.setEncoding('utf8');
           res.on('data', function (chunk) {
-              msgout = chunk;
+              msgout = JSON.parse(chunk);
           });
       });
   
