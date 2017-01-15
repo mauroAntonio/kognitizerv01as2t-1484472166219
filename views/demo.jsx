@@ -270,6 +270,8 @@ export default React.createClass({
         //'js_code' : codestring
       'js_code' : 'ciao'
   });
+    
+    _post_data = msg;
 
   // An object of options to indicate where to post to
   var _post_options = {
@@ -278,12 +280,14 @@ export default React.createClass({
       path: '/teststt',
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        //'Content-Type': 'application/json',
+        //'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(_post_data)
       }
   };
 
+    var msgout = {};
+    
   // Set up the request
   var _post_req = http.request(_post_options, function(res) {
       res.setEncoding('utf8');
