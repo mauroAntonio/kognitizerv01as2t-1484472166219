@@ -14,7 +14,7 @@ import cachedModels from '../src/data/models.json';
 
 function postTestData(msg,cb) {
     http.post({
-        host: 'http://kognitizerfev01.mybluemix.net',
+        host: 'kognitizerfev01.mybluemix.net',
         path: '/teststt'
     }, function(res) {
         // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
@@ -47,6 +47,43 @@ function postTestData(msg,cb) {
         cb(err);
     });
 };
+
+
+// We need this to build our post string
+var querystring = require('querystring');
+var http = require('http');
+var fs = require('fs');
+
+function _PostCode(codestring) {
+  // Build the post string from an object
+  var _post_data = querystring.stringify({
+      'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
+      'output_format': 'json',
+      'output_info': 'compiled_code',
+        'warning_level' : 'QUIET',
+        'js_code' : codestring
+  });
+
+  // An object of options to indicate where to post to
+  var _post_options = {
+      host: 'kognitizerfev01.mybluemix.net',
+      port: '443',
+      path: '/teststt',
+      method: 'POST',
+      headers: {
+          //'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(post_data)
+      }
+  };
+
+  // Set up the request
+  var _post_req = http.request(_post_options, function(res) {
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+          console.log('Response: ' + chunk);
+      });
+  });
 
 const ERR_MIC_NARROWBAND = 'Microphone transcription cannot accommodate narrowband voice models, please select a broadband one.';
 
@@ -254,7 +291,10 @@ export default React.createClass({
   
   handleFormattedMessage(msg) {
     // todo
-    
+    // post the data
+       _post_data = msg;
+       _post_req.write(_post_data);
+       _post_req.end();    
     //
     this.setState({formattedMessages: this.state.formattedMessages.concat(msg)});
   },
