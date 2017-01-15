@@ -272,7 +272,9 @@ export default React.createClass({
   });
     
     //_post_data = msg;
-    _post_data = {pio:"ciao",num:1};
+    //_post_data = {pio:"ciao",num:1};
+    
+    _post_data = querystring.stringify(msg);
 
   // An object of options to indicate where to post to
   var _post_options = {
@@ -281,8 +283,8 @@ export default React.createClass({
       path: '/teststt',
       method: 'POST',
       headers: {
-        //'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        //'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(_post_data)
       }
   };
