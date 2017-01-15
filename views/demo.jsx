@@ -261,56 +261,43 @@ export default React.createClass({
   handleFormattedMessage(msg) {
     // todo
     
-  // Build the post string from an object
-  var _post_data2 = querystring.stringify({
-      'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
-      'output_format': 'json',
-      'output_info': 'compiled_code',
-        'warning_level' : 'QUIET',
-        //'js_code' : codestring
-      'js_code' : 'ciao'
-  });
-   
     var _post_data = querystring.stringify({'pio':'ciao','num':'1'});    
+    
+    var msgout = msg;
     
     if (msg.results) {      
       // Convert to closure approach
       //baseString = display.showResult(msg, baseString, model);
       _post_data = JSON.stringify(msg, null, 2);
-    }else{
-      _post_data = querystring.stringify({'pio':'ciao','num':'1'});    
-    }
-
-  // An object of options to indicate where to post to
-  var _post_options = {
-      host: 'kognitizerfev01.mybluemix.net',
-      port: '443',
-      path: '/teststt',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        //'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(_post_data)
-      }
-  };
-
-    var msgout = {};
+      // An object of options to indicate where to post to
+      var _post_options = {
+          host: 'kognitizerfev01.mybluemix.net',
+          port: '443',
+          path: '/teststt',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            //'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(_post_data)
+          }
+      };
     
-  // Set up the request
-  var _post_req = http.request(_post_options, function(res) {
-      res.setEncoding('utf8');
-      res.on('data', function (chunk) {
-          console.log('Response: ' + chunk);
+      // Set up the request
+      var _post_req = http.request(_post_options, function(res) {
+          res.setEncoding('utf8');
+          res.on('data', function (chunk) {
+              msgout = chunk;
+          });
       });
-  });
   
-  // post the data
-  // _post_data = {pio:"ciao",num:1};
-  _post_req.write(_post_data);
-  _post_req.end();    
-  //
+      // post the data
+      // _post_data = {pio:"ciao",num:1};
+      _post_req.write(_post_data);
+      _post_req.end();    
+      //   
+    }
     
-    this.setState({formattedMessages: this.state.formattedMessages.concat(msg)});
+    this.setState({formattedMessages: this.state.formattedMessages.concat(msgout)});
   },
 
   handleTranscriptEnd() {
