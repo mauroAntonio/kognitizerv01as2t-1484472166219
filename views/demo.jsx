@@ -259,15 +259,11 @@ export default React.createClass({
   
   
   handleFormattedMessage(msg) {
-    // todo
     
-    var _post_data = querystring.stringify({'pio':'ciao','num':'1'});    
-    
-    var msgout = msg;
-    
+    // todo    
     if (msg.results) {      
       // Convert to closure approach
-      //baseString = display.showResult(msg, baseString, model);
+      var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
       _post_data = JSON.stringify(msg, null, 2);
       // An object of options to indicate where to post to
       var _post_options = {
@@ -286,18 +282,17 @@ export default React.createClass({
       var _post_req = http.request(_post_options, function(res) {
           res.setEncoding('utf8');
           res.on('data', function (chunk) {
-              msgout = JSON.parse(chunk);
+              console.log('Response: ' + chunk);
           });
       });
   
       // post the data
-      // _post_data = {pio:"ciao",num:1};
       _post_req.write(_post_data);
       _post_req.end();    
       //   
     }
     
-    this.setState({formattedMessages: this.state.formattedMessages.concat(msgout)});
+    this.setState({formattedMessages: this.state.formattedMessages.concat(msg)});
   },
 
   handleTranscriptEnd() {
