@@ -292,9 +292,9 @@ export default React.createClass({
   handleFormattedMessage(msg) {
     // todo
     // post the data
-       _post_data = msg;
-       _post_req.write(_post_data);
-       _post_req.end();    
+       //_post_data = msg;
+       //_post_req.write(_post_data);
+       //_post_req.end();    
     //
     this.setState({formattedMessages: this.state.formattedMessages.concat(msg)});
   },
