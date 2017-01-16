@@ -264,9 +264,11 @@ export default React.createClass({
     if (msg.results) {     
       
       // Convert to closure approach
-      var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
+      //var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
       
-      _post_data = JSON.stringify(msg, null, 2);
+      //_post_data = JSON.stringify(msg, null, 2);
+      
+      var _post_data = msg;
       
       // An object of options to indicate where to post to
       var _post_options = {
@@ -275,9 +277,10 @@ export default React.createClass({
           path: '/teststt',
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            //'Content-Type': 'application/x-www-form-urlencoded',
             //'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(_post_data)
+            'Content-Type': 'text/html',
+            //'Content-Length': Buffer.byteLength(_post_data)
           }
       };
     
