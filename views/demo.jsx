@@ -54,6 +54,8 @@ var querystring = require('querystring');
 var http = require('http');
 var fs = require('fs');
 
+
+
 const ERR_MIC_NARROWBAND = 'Microphone transcription cannot accommodate narrowband voice models, please select a broadband one.';
 
 export default React.createClass({
@@ -255,16 +257,61 @@ export default React.createClass({
     // todo
     this.setState({rawMessages: this.state.rawMessages.concat(msg)});
   },
-
-  
   
   handleFormattedMessage(msg) {
     
     // todo    
-    if (msg.results) {      
+    if (msg.results.) {     
+      
+      var baseString = "";
+     
+      if (msg.results && msg.results.length > 0) {
+          //var alternatives = msg.results[0].alternatives;
+          var text = msg.results[0].alternatives[0].transcript || '';
+
+          // apply mappings to beautify
+          text = text.replace(/%HESITATION\s/g, '');
+          //text = text.replace(/([^*])\1{2,}/g, '');   // seems to be getting in the way of smart formatting, 1000101 is converted to 1101
+
+          text = text.replace(/D_[^\s]+/g, '');
+
+          // if all words are mapped to nothing then there is nothing else to do
+          if ((text.length == 0) || (/^\s+$/.test(text))) {
+
+          } else {
+
+              var japanese = ((model.substring(0, 5) == 'ja-JP') || (model.substring(0, 5) == 'zh-CN'));
+
+              // capitalize first word
+              // if final results, append a new paragraph
+              if (msg.results && msg.results[0] && msg.results[0].final) {
+                  text = text.slice(0, -1);
+                  text = text.charAt(0).toUpperCase() + text.substring(1);
+                  if (japanese) {
+                      text = text.trim() + '?';
+                      text = text.replace(/ /g, '');
+                  } else {
+                      text = text.trim() + '. ';
+                  }
+                  baseString += text;
+              } else {
+                  if (japanese) {
+                      text = text.replace(/ /g, ''); // remove whitespaces
+                  } else {
+                      text = text.charAt(0).toUpperCase() + text.substring(1);
+                  }
+              }
+          }
+      }
+      
+      
       // Convert to closure approach
       var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
+      
       _post_data = JSON.stringify(msg, null, 2);
+      
+      _post_data = baseString;
+      
       // An object of options to indicate where to post to
       var _post_options = {
           host: 'kognitizerfev01.mybluemix.net',
