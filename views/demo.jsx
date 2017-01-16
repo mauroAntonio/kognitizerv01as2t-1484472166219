@@ -280,7 +280,7 @@ export default React.createClass({
             //'Content-Type': 'application/x-www-form-urlencoded',
             //'Content-Type': 'application/json',
             'Content-Type': 'text/html',
-            //'Content-Length': Buffer.byteLength(_post_data)
+            'Content-Length': Buffer.byteLength(_post_data)
           }
       };
     
