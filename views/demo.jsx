@@ -261,7 +261,7 @@ export default React.createClass({
   handleFormattedMessage(msg) {
     
     // todo    
-    if (msg.results.) {     
+    if (msg.results) {     
       
       var baseString = "";
      
