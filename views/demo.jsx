@@ -261,7 +261,7 @@ export default React.createClass({
   handleFormattedMessage(msg) {
     
     // todo    
-    if (msg.results) {     
+    if (msg.results[0][0].confidence) {     
       
       // Convert to closure approach
       var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
