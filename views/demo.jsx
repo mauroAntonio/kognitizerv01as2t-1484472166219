@@ -264,11 +264,11 @@ export default React.createClass({
     if (msg.results) {     
       
       // Convert to closure approach
-      //var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
+      var _post_data = querystring.stringify({'pio':'ciao','num':'1'});       
       
-      //_post_data = JSON.stringify(msg, null, 2);
+      _post_data = JSON.stringify(msg, null, 2);
       
-      var _post_data = msg;
+      //var _post_data = msg;
       
       // An object of options to indicate where to post to
       var _post_options = {
@@ -277,9 +277,9 @@ export default React.createClass({
           path: '/teststt',
           method: 'POST',
           headers: {
-            //'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/x-www-form-urlencoded',
             //'Content-Type': 'application/json',
-            'Content-Type': 'text/html',
+            //'Content-Type': 'text/html',
             'Content-Length': Buffer.byteLength(_post_data)
           }
       };
@@ -288,7 +288,9 @@ export default React.createClass({
       var _post_req = http.request(_post_options, function(res) {
           res.setEncoding('utf8');
           res.on('data', function (chunk) {
-              console.log('Response: ' + chunk);
+              //console.log('Response: ' + chunk);
+              var reversa = JSON.parse(chunk);
+              console.log('Response: ' + reversa);
           });
       });
   
