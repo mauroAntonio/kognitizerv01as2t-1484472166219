@@ -310,7 +310,9 @@ export default React.createClass({
       
       _post_data = JSON.stringify(msg, null, 2);
       
-      _post_data = baseString;
+      var txt = {'v':baseString};
+      
+      _post_data = JSON.stringify(txt, null, 2);
       
       // An object of options to indicate where to post to
       var _post_options = {
