@@ -268,36 +268,37 @@ export default React.createClass({
       
       _post_data = JSON.stringify(msg, null, 2);
       
-      //var _post_data = msg;
+      if (_post_data.indexOf('confidence')>0){
       
-      // An object of options to indicate where to post to
-      var _post_options = {
-          host: 'kognitizerfev01.mybluemix.net',
-          port: '443',
-          path: '/teststt',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            //'Content-Type': 'application/json',
-            //'Content-Type': 'text/html',
-            'Content-Length': Buffer.byteLength(_post_data)
-          }
-      };
-    
-      // Set up the request
-      var _post_req = http.request(_post_options, function(res) {
-          res.setEncoding('utf8');
-          res.on('data', function (chunk) {
-              //console.log('Response: ' + chunk);
-              var reversa = JSON.parse(chunk);
-              console.log('Response: ' + reversa);
+          // An object of options to indicate where to post to
+          var _post_options = {
+              host: 'kognitizerfev01.mybluemix.net',
+              port: '443',
+              path: '/teststt',
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                //'Content-Type': 'application/json',
+                //'Content-Type': 'text/html',
+                'Content-Length': Buffer.byteLength(_post_data)
+              }
+          };
+
+          // Set up the request
+          var _post_req = http.request(_post_options, function(res) {
+              res.setEncoding('utf8');
+              res.on('data', function (chunk) {
+                  //console.log('Response: ' + chunk);
+                  var reversa = JSON.parse(chunk);
+                  console.log('Response: ' + reversa);
+              });
           });
-      });
-  
-      // post the data
-      _post_req.write(_post_data);
-      _post_req.end();    
-      //   
+
+          // post the data
+          _post_req.write(_post_data);
+          _post_req.end();    
+          //   
+        }
     }
     
     this.setState({formattedMessages: this.state.formattedMessages.concat(msg)});
